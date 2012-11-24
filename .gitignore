@@ -17,5 +17,6 @@ app/build/TermKit.app/Contents/Resources/HTML/
 app/build/TermKit.app/Contents/Resources/shared/
 
 components
-/src/public/bower/
+/src/public/vendor/
 /src/public/build/
+/src/public/bower/
