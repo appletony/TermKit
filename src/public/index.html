@@ -14,7 +14,7 @@
   	<link rel='stylesheet' href='vendor/SyntaxHighlighter/styles/shCore.css' type='text/css' media='screen'/>
   	<link rel='stylesheet' href='vendor/SyntaxHighlighter/styles/shThemeFadeToGrey.css' type='text/css' media='screen'/>
   	
-    <script type='text/javascript' charset='utf-8' src='js/termkit.js'></script>
+<!--     <script type='text/javascript' charset='utf-8' src='js/termkit.js'></script>
     <script type='text/javascript' charset='utf-8' src='js/container.js'></script>
     <script type='text/javascript' charset='utf-8' src='../shared/protocol.js'></script>
     <script type='text/javascript' charset='utf-8' src='js/client/client.js'></script>
@@ -33,15 +33,19 @@
     <script type='text/javascript' charset='utf-8' src='js/commandview/commandview.js'></script>
     <script type='text/javascript' charset='utf-8' src='js/commandview/commandcontext.js'></script>
     <script type='text/javascript' charset='utf-8' src='js/commandview/command.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/syntax.js'></script>
+    <script type='text/javascript' charset='utf-8' src='js/syntax.js'></script> -->
     
-    <link rel='stylesheet' href='css/typography.css' type='text/css' media='screen'/>
-    <link rel='stylesheet' href='css/termkit.css' type='text/css' media='screen'/>
+<!--     <link rel='stylesheet' href='css/typography.css' type='text/css' media='screen'/>
+    <link rel='stylesheet' href='css/termkit.css' type='text/css' media='screen'/> -->
+    
+    <link href='build/build.css' rel='stylesheet' type='text/css' media='screen'/>
+    <script src='build/build.js'></script>
     
     <style type='text/css' media='screen' id='dynamic-styles'></style>
   </head>
   <body>
-    <div id='terminal'></div>
-    <div><iframe id='usage'></iframe></div>
+    <script>$(function () {require('TermKit/src/public/js/termkit.js');});</script>
+<!--     <div id='terminal'></div>
+    <div><iframe id='usage'></iframe></div> -->
   </body>
 </html>

@@ -1,8 +1,36 @@
 var debug = false;
-if (typeof exports == 'undefined') {
+if (typeof module === 'undefined' || typeof module.exports ==='undefined') {
   exports = termkit;
   debug = false;
 }
+
+
+var protocol = module.exports = function (connection, handler, autoconnect) {
+  this.connection = connection;
+  this.handler = handler;
+  this.version = '1';
+  
+  this.callbacks = {};
+  this.counter = 1;
+  
+  this.agreed = false;
+  
+  var that = this;
+  connection.on('connect', function () {
+    that.handshake();
+  });
+  connection.on('message', function (data) {
+    that.receive(data);
+  });
+  connection.on('disconnect', function () {
+    that.handler.disconnect && that.handler.disconnect();
+  });
+  
+  autoconnect && this.handshake();
+}
+
+
+
 
 exports.protocol = function (connection, handler, autoconnect) {
   
@@ -18,7 +46,7 @@ exports.protocol = function (connection, handler, autoconnect) {
   var that = this;
   connection.on('connect', function () {
     that.handshake();
-  }); 
+  });
   connection.on('message', function (data) {
     that.receive(data);
   });

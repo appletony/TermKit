@@ -1,7 +1,9 @@
 {
   "name": "TermKit",
   "version": "0.0.1",
-  "scripts": [],
-  "styles": [],
-  "main": ""
+  "main": "src/public/js/termkit.js",
+  "scripts": [
+    "src/public/js/termkit.js"
+  ],
+  "styles": []
 }
