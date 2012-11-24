@@ -4,7 +4,6 @@ var EventEmitter = require('events').EventEmitter,
     fs = require('fs'),
     singleton;
 
-//var config = require('./config').getConfig();
 
 /**
  * Static accessor.

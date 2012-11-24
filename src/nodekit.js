@@ -8,9 +8,6 @@ var router = require('./router'),
 
 var file = kip(path.dirname(__filename), {cache: '50mb'})
 
-// Load config file.
-var config = require('./config').getConfig()
-
 // Set up http server.
 var server = http.createServer(blage(file)).listen(2222)
 

@@ -9,6 +9,7 @@
     "url": "git://github.com/ramitos/TermKit.git"
   },
   "dependencies": {
+    "component": "0.9.x",
     "socket.io": "0.9.x",
     "longjohn": "0.0.x",
     "bower": "0.6.x",
