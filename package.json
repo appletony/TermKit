@@ -1,0 +1,11 @@
+{
+  "name": "TermKit",
+  "version": "0.0.1",
+  "description": "Experimental Terminal platform",
+  "main": "termkit.js",
+  "license": "BSD",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ramitos/TermKit.git"
+  }
+}
