@@ -1,6 +1,6 @@
-var command = require('shell/command'),
-    returnMeta = require('misc').returnMeta,
-    autocomplete = require('shell/autocomplete').autocomplete;
+var command = require('./command'),
+    returnMeta = require('../misc').returnMeta,
+    autocomplete = require('./autocomplete').autocomplete;
 
 /**
  * Message processor.
@@ -188,11 +188,11 @@ workerProcessor.handlers = {
       list.go();
     }
     catch (e) {
-      var out = ['exception ' + e];
-      for (i in e) out.push(i +': ' + e[i]);
-      out.push('');
-      out.push('');
-      process.stderr.write(out.join("\n"));
+      // var out = ['exception ' + Object.keys(e)];
+      // for (i in e) out.push(i +': ' + e[i]);
+      // out.push('');
+      // out.push('');
+      process.stderr.write([e.message, e.arguments, e.type, e.stack].join('\n'));
       exit(false);
     };
   },

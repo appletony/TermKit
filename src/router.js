@@ -1,6 +1,6 @@
 var shell = require('./shell');
 var returnMeta = require('./misc').returnMeta;
-var protocol = require('protocol');
+var protocol = require('./shared/protocol');
 
 /**
  * Processes incoming messages on a connection, routes them to active sessions.

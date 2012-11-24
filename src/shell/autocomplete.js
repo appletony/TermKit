@@ -1,5 +1,5 @@
 var fs = require('fs'),
-    builtin = require('shell/builtin/builtin');
+    builtin = require('./builtin/builtin');
 
 /*
 
@@ -78,13 +78,13 @@ exports.autocomplete.prototype = {
         that.filesystem(path, prefix, { ignoreCase: ignoreCase, executable: true }, track(function (files) {
           matches = matches.concat(files);
         }));
-      })(paths[i]);      
+      })(paths[i]);
     }
     else {
       // Scan current dir for files.
       this.filesystem(cwd, prefix, { ignoreCase: ignoreCase }, track(function (files) {
         matches = files;
-      }));      
+      }));
     }
     
   },

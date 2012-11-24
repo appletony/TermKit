@@ -16,3 +16,6 @@ TermKit.app
 *.perspectivev3
 
 node_modules
+src/public/components
+/src/public/external/jquery-ui/css/ui-darkness/images/ui-bg_flat_30_cccccc_40x100.png
+/src/public/external/jquery-ui/development-bundle/demos/selectable/index.html

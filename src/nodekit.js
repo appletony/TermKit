@@ -1,21 +1,21 @@
-var http = require('http'),
-    io = require('socket.io-node'),
-    router = require("./router");
+var router = require('./router'),
+    io = require('socket.io'),
+    blage = require('blage'),
+    path = require('path'),
+    http = require('http'),
+    kip = require('kip')
+
+var file = kip(path.dirname(__filename), {
+  cache: '50mb'
+})
 
 // Load config file.
-var config = require('./config').getConfig();
+var config = require('./config').getConfig()
 
 // Set up http server.
-var server = http.createServer(function (request, result) {
-//  result.writeHeader(200, {'Content-Type': 'text/html'});
-//  result.writeBody('<h1>TermKit</h1>');
-//  result.finish();
-});
-
-server.listen(2222);
+var server = http.createServer(blage(file)).listen(2222)
 
 // Set up WebSocket and handlers.
-var ioServer = io.listen(server);
-ioServer.sockets.on('connection', function (client) {
-  var p = new router.router(client);
-});
+io.listen(server).sockets.on('connection', function (socket) {
+  var p = new router.router(socket)
+})
