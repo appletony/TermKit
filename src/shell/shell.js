@@ -65,7 +65,7 @@ exports.shell.prototype = {
 
   // Close worker.
   close: function () {
-    this.process.stdin.end();
+    //this.process.stdin.end();
   },
   
   // Send query to worker.
