@@ -1,6 +1,6 @@
-var view = require('view/view'),
-    reader = require('shell/reader'),
-    parseArgs = require('misc').parseArgs;
+var view = require('../../view/view'),
+    reader = require('../reader'),
+    parseArgs = require('../../misc').parseArgs;
 
 exports.main = function (tokens, pipes, exit, environment) {
   var out = new view.bridge(pipes.viewOut);

@@ -4,8 +4,7 @@ var fs = require('fs'),
     asyncCallback = require('../misc').asyncCallback;
     async = require('../misc').async,
     extend = require('../misc').extend,
-    JSONPretty = require('../misc').JSONPretty,
-    composePath = require('../misc').composePath,
+    path = require('path'),
     objectKeys = require('../misc').objectKeys,
     reader = require('./reader'),
     escapeBinary = require('../misc').escapeBinary,
@@ -134,7 +133,7 @@ exports.plugins.text.prototype = extend(new exports.plugin(), {
 
 exports.plugins.text.supports = function (headers) {
   var type = headers.get('Content-Type');
-  return !!(/^text\//(type)) * 1;
+  return !!(type.match(/^text\//)) * 1;
 }
 
 /**
@@ -168,7 +167,7 @@ exports.plugins.pdf.prototype = extend(new exports.plugin(), {
 
 exports.plugins.pdf.supports = function (headers) {
   var type = headers.get('Content-Type');
-  return !!(/^application\/pdf/(type)) * 2;
+  return !!(type.match(/^application\/pdf/)) * 2;
 }
 
 /**
@@ -202,7 +201,7 @@ exports.plugins.html.prototype = extend(new exports.plugin(), {
 
 exports.plugins.html.supports = function (headers) {
   var type = headers.get('Content-Type');
-  return !!(/^text\/html/(type)) * 2;
+  return !!(type.match(/^text\/html/)) * 2;
 }
 
 /**
@@ -226,7 +225,7 @@ exports.plugins.code.prototype = extend(new exports.plugins.text(), {
   data: function (data) {
     data = data.toString('utf-8');
     if (this.headers.get('Content-Type') == 'application/json') {
-      data = JSONPretty(data);
+      data = JSON.stringify(typeof data === 'string' ? JSON.parse(data) : data, null, '  ');
     }
     this.out.update('output', { contents: data }, true);
   },
@@ -286,7 +285,7 @@ exports.plugins.image.prototype = extend(new exports.plugin(), {
 
 exports.plugins.image.supports = function (headers) {
   var type = headers.get('Content-Type');
-  return !!(/^image\//(type)) * 1;
+  return !!(type.match(/^image\//)) * 1;
 };
 
 /**
@@ -339,15 +338,15 @@ exports.plugins.files.prototype = extend(new exports.plugin(), {
 
     // Iterate over each list.
     var set = 0, j;
-    for (key in data) (function (files, path) {
+    for (key in data) (function (files, filePath) {
 
       // Prepare files.
       for (j in files) (function (file, i, j) {
 
         // Stat each file.
-        fs.stat(composePath(file, path), track(function (error, stats) {
+        fs.stat(path.join(filePath, file), track(function (error, stats) {
           if (!error) {
-            output[i][j] = view.file(null, file, path, stats);
+            output[i][j] = view.file(null, file, filePath, stats);
           }
           else {
             errors++;
@@ -373,7 +372,7 @@ exports.plugins.files.prototype = extend(new exports.plugin(), {
 exports.plugins.files.supports = function (headers) {
   var type = headers.get('Content-Type'),
       schema = headers.get('Content-Type', 'schema');
-  return !!(/^application\/json$/(type) && (schema == 'termkit.files')) * 3;
+  return !!(type.match(/^application\/json$/) && (schema == 'termkit.files')) * 3;
 };
 
 /**
@@ -401,7 +400,7 @@ exports.plugins.unix.prototype = extend(new exports.plugin(), {
 exports.plugins.unix.supports = function (headers) {
   var type = headers.get('Content-Type'),
       schema = headers.get('Content-Type', 'schema');
-  return !!(/^application\/octet-stream$/(type) && (schema == 'termkit.unix')) * 3;
+  return !!(type.match(/^application\/octet-stream$/) && (schema == 'termkit.unix')) * 3;
 }
 
 /**
@@ -428,7 +427,7 @@ exports.plugins.binary.prototype = extend(new exports.plugin(), {
 
 exports.plugins.binary.supports = function (headers) {
   var type = headers.get('Content-Type');
-  return !!(/^application\/octet-stream/(type)) * 1;
+  return !!(type.match(/^application\/octet-stream/)) * 1;
 }
 
 /**
@@ -481,6 +480,6 @@ exports.plugins.hex.prototype = extend(new exports.plugin(), {
 exports.plugins.hex.supports = function (headers) {
   var type = headers.get('Content-Type'),
       schema = headers.get('Content-Type', 'schema');
-  return !!(/^application\/octet-stream$/(type) && (schema == 'termkit.hex')) * 3;
+  return !!(type.match(/^application\/octet-stream$/) && (schema == 'termkit.hex')) * 3;
 }
 

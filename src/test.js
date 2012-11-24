@@ -10,7 +10,7 @@ require.paths.unshift('.');
 require.paths.unshift('shell');
 require.paths.unshift('../Shared/');
 
-var whenDone = require('misc').whenDone;
+var whenDone = require('./misc').whenDone;
 var EventEmitter = require("events").EventEmitter;
 
 var router = require("router");
@@ -304,23 +304,6 @@ function testAutocomplete(assert) {
 /**
  * Test misc utilties.
  */
-function testMisc(assert) {
-  assert(misc.JSONPretty({}) == '{ \n} ', 'Pretty print {}');
-  assert(misc.JSONPretty([]) == '[ \n] ', 'Pretty print []');
-
-  assert(misc.JSONPretty({'foo':'bar', 'baz':'bam'})
-         == '{ \n  "foo": "bar", \n  "baz": "bam"\n} ',
-         'Pretty print object');
-
-  assert(misc.JSONPretty({foo: {baz:'bam'}, faz: {baz:'bam'}})
-         == '{ \n  "foo": { \n    "baz": "bam"\n  } , \n  "faz": { \n    "baz": "bam"\n  }\n} ',
-         'Pretty print nested objects');
-
-  assert(misc.JSONPretty(['baz', {'foo':'bar'}, 12.3, 'aaa'])
-         == '[ \n  "baz", \n  { \n    "foo": "bar"\n  } , \n  12.3, \n  "aaa"\n] ',
-         'Pretty print array');
-}
-
 function mockPipes() {
 
   var fake    = new EventEmitter();

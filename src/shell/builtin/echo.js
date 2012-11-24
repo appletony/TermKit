@@ -1,4 +1,4 @@
-var meta = require('shell/meta');
+var meta = require('../meta');
 
 exports.main = function (tokens, pipes, exit, environment) {
 

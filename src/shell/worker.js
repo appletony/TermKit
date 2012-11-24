@@ -4,4 +4,4 @@ var processor = require('./processor');
 process.chdir(process.env.HOME);
 
 // Set up processor.
-var p = new processor.processor(process.openStdin(), process.stdout);
+var p = new processor.processor();

@@ -7,12 +7,9 @@ var command = require('./command'),
  *
  * Reads messages and executes them, and routes back results.
  */
-var workerProcessor = exports.processor = function (inStream, outStream) {
+var workerProcessor = exports.processor = function () {
   // Set up stream callbacks.
-  var that = this;
-  inStream.on('data', function (data) { that.data(data); });
-  inStream.on('end', function () { });
-  this.outStream = outStream;
+  process.on('message', this.receive.bind(this));
   
   this.buffer = '';
   this.views = {};
@@ -20,26 +17,15 @@ var workerProcessor = exports.processor = function (inStream, outStream) {
 };
 
 exports.processor.prototype = {
-  // Process zero-delimited framing.
-  data: function (data) {
-    this.buffer += data;
-    while (this.buffer.indexOf("\u0000") >= 0) {
-      var chunk = this.buffer.split("\u0000").shift();
-      this.receive(chunk);
-      this.buffer = this.buffer.substring(chunk.length + 1);
-    }
-  },
-
   // Reply with message.
   send: function (message) {
-    var data = JSON.stringify(message);
-    this.outStream.write(data + "\u0000");
+	  process.send(message);
   },
   
   // Parse JSON command.
-  receive: function (data) {
+  receive: function (message) {
     try {
-      var message = JSON.parse(data), view;
+      var view;
       if (typeof message == 'object') {
         var that = this,
             exit, returned;
@@ -180,6 +166,7 @@ workerProcessor.handlers = {
 
       meta = meta || {};
       meta.environment = that.environment();
+	  meta.executed = true;
       exit(success, object, meta);
     };
 
@@ -188,11 +175,11 @@ workerProcessor.handlers = {
       list.go();
     }
     catch (e) {
-      // var out = ['exception ' + Object.keys(e)];
-      // for (i in e) out.push(i +': ' + e[i]);
-      // out.push('');
-      // out.push('');
-      process.stderr.write([e.message, e.arguments, e.type, e.stack].join('\n'));
+      var out = ['exception ' + e];
+      for (i in e) out.push(i +': ' + e[i]);
+      out.push('');
+      out.push('');
+      process.stderr.write(out.join("\n"));
       exit(false);
     };
   },

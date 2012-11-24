@@ -115,17 +115,20 @@ exports.commandFactory = function (command, emitter, invoke, exit, environment) 
   var unit;
   try {
     // Try built-in.
+	console.error('trying builtin');
     unit = new exports.commandUnit.builtinCommand(command, emitter, invoke, exit, environment);
     unit.spawn();
   }
   catch (e) {
     try {
       // Try native command.
+      console.error('trying native');
       unit = new exports.commandUnit.unixCommand(command, emitter, invoke, exit, environment);
       unit.spawn();
     }
     catch (e) {
       // Execute null.js fallback.
+      console.error('falling back to null.js');
       unit = new exports.commandUnit.builtinCommand(command, emitter, invoke, exit, environment);
       unit.override = 'null';
       unit.spawn();
@@ -152,7 +155,7 @@ exports.commandUnit.prototype = {
     this.process = {
       stdin: new EventEmitter(),
       stdout: new EventEmitter(),
-    };
+    };  
   },
   
   go: function () { },
@@ -184,13 +187,15 @@ exports.commandUnit.builtinCommand.prototype.spawn = function () {
 
   // Look up command.
   if (!builtin.commands[prefix]) {
+	console.error('unknown command');
     throw "Unknown command '"+ prefix +"'";
   }
 
   // Load handler.
   try {
-    this.handler = require('builtin/' + prefix);
+    this.handler = require('./builtin/' + prefix);
   } catch (e) {
+	console.error('error loading handler');
     throw "Error loading handler '"+ prefix +"': " + e;
   }
   
@@ -276,7 +281,7 @@ exports.commandUnit.unixCommand.prototype.spawn = function () {
       command = this.command,
       prefix = (this.prefix = command.shift());
 
-  this.process = spawn(prefix, command);
+  this.process = spawn(prefix, command, { env: process.env, cwd: process.cwd() });
 
   this.process.on('exit', function (code) {
     that.exit(!code, { code: code });

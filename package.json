@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "socket.io": "0.9.x",
+    "longjohn": "0.0.x"
     "blage": "0.0.x",
     "mime": "1.2.x",
     "kip": "*"

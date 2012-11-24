@@ -1,10 +1,10 @@
 var EventEmitter = require('events').EventEmitter,
+    path = require('path'),
     extend = require('./misc').extend,
-    composePath = require('./misc').composePath,
     fs = require('fs'),
     singleton;
 
-//var config = require('config').getConfig();
+//var config = require('./config').getConfig();
 
 /**
  * Static accessor.
@@ -29,8 +29,8 @@ exports.configStore = function (paths) {
   // Detect mac.
   var mac;
   try {
-    var appSupport = composePath('Library/Application Support', process.env.HOME),
-        termkitSupport = composePath('TermKit', appSupport);
+    var appSupport = path.join(process.env.HOME, 'Library/Application Support'),
+        termkitSupport = path.join(appSupport, 'TermKit');
 
     // Look for Application Support (detect mac).
     fs.statSync(appSupport);
@@ -54,9 +54,9 @@ exports.configStore = function (paths) {
   paths.push(process.env.HOME);
   
   // Iterate over search paths.
-  var path, json;
+  var json;
   for (i in paths) {
-    var file = composePath(this.file, paths[i]);
+    var file = path.join(paths[i], this.file);
     try {
       json = fs.readFileSync(file, 'utf8');
       this.path = paths[i];
@@ -73,7 +73,7 @@ exports.configStore = function (paths) {
     if (json) {
       data = JSON.parse(json);
     }
-  } catch (e) { throw 'Unable to parse config file "' + composePath(this.file, this.path) + '"'; };
+  } catch (e) { throw 'Unable to parse config file "' + path.join(this.path, this.file) + '"'; };
 
   this.config = new exports.configValues(data, this);
 };
@@ -84,7 +84,7 @@ exports.configStore.prototype = {
 
     // Fire and forget save.
     var json = JSON.stringify(values);
-    var file = composePath(this.file, this.path);
+    var file = path.join(this.path, this.file);
     fs.writeFile(file, json, 'utf8');
   },
   

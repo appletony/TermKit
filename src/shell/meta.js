@@ -22,12 +22,13 @@ function join(string) {
 
 // Quote a string
 function quote(string) {
-  if (/[\u0080-\uFFFF]/(string)) {
-    // TODO: RFC2047 mime encoded tokens.
+  //if (/[\u0080-\uFFFF]/(string)) {
+  //  // TODO: RFC2047 mime encoded tokens.
+  //}
+  if (string.match(RegExp("[()<>@,;:\"\[\]?=]"))) {
+    return '"' + string.replace(RegExp("([\"])", 'g'), '\\$1') + '"';
   }
-  if (/[ ()<>@,;:\\"\[\]?=]/(string)) {
-    return '"' + string.replace(/([\\"])/g, '\\$1') + '"';
-  }
+
   return string;
 }
 
@@ -214,7 +215,7 @@ exports.headers.prototype = {
     // Parse out fields (RFC 822).
     var field;
 
-    while (field = /^([^:\x00-\x20]+): +(([^\r\n]|(?:\r\n[ \t]))+)(\r\n|$)/(headers)) {
+    while (field = headers.match(RegExp("^([^:\x00-\x20]+): +(([^\r\n]|(?:\r\n[ \t]))+)(\r\n|$)"))) {
 
       // Undo line folding.
       var string = field[2].replace(/\r\n[ \t]/g, ''),
@@ -266,7 +267,7 @@ exports.headers.prototype = {
         stack = stack.join('');
 
         var match;
-        if (match = /([^=]+)=(.+)/(stack)) {
+        if (match = stack.match(/([^=]+)=(.+)/)) {
           params[match[1]] = match[2];
         }
         else if (stack.length) {
@@ -294,7 +295,7 @@ exports.headers.prototype = {
             which = null,
             match;
         for (i in patterns) {
-          if (match = patterns[i](work)) {
+          if (match = work.match(patterns[i])) {
             which = i;
             break;
           }
@@ -411,7 +412,7 @@ exports.headers.prototype = {
    */
   param: function (key, value) {
     // Parameter value (RFC 2231.. ugh)
-    if (/[\u0080-\uFFFF]/(value)) {
+    if (value.match(/[\u0080-\uFFFF]/)) {
       var encoded = encodeURIComponent(value);
       var safe = quote(value.replace(/[\u0080-\uFFFF]/g, ''));
       return quote(key + '*') + '="' + encodeURIComponent(value) + '";' + quote(key) + '=' + quote(safe);
@@ -445,12 +446,12 @@ exports.sniff = function (file, data) {
   }
 
   // Detect binary data.
-  if (/[\u0000]/(attempt)) {
+  if (attempt.match(/[\u0000]/)) {
     binary = true;
   }
 
   // Detect ansi color codes.
-  if (/[\u001b\[[0-9]+m/(attempt)) {
+  if (attempt.match(/[\u001b\[[0-9]+m/)) {
     ansi = true;
     if (type == 'application/octet-stream' || type == 'text/plain') {
       type = [ 'application/octet-stream', { schema: 'termkit.unix' }];

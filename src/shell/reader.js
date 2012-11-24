@@ -4,8 +4,6 @@ var fs = require('fs'),
     asyncCallback = require('../misc').asyncCallback;
     async = require('../misc').async,
     extend = require('../misc').extend,
-    JSONPretty = require('../misc').JSONPretty,
-    composePath = require('../misc').composePath,
     expandPath = require('../misc').expandPath;
 
 // Is x an object?
@@ -236,7 +234,7 @@ exports.fileReader.prototype = {
 
                 // Get handler and begin processing.
                 that.handler = that.begin(headers);
-                that.buffered = that.handler.begin && that.handler.begin(headers);
+                that.buffered = that.handler.begin && that.handler.begin(headers);              
               }
             
               // If buffered, read file and return.
@@ -438,7 +436,7 @@ exports.filesReader.prototype = {
     var type = 'application/octed-stream';
     
     prefix = commonPrefix(types);
-    if (!(/^[^\/]+\/[^\/]+$/(prefix))) {
+    if (!prefix.match(/^[^\/]+\/[^\/]+$/)) {
       // If we only matched a type category (e.g. text/),
       // coerce types to their base.
       types = types.map(function (type) {
@@ -446,7 +444,7 @@ exports.filesReader.prototype = {
       });
       prefix = commonPrefix(types);
       
-      if (!(/^[^\/]+\/[^\/]+$/(prefix))) {
+      if (!prefix.match(/^[^\/]+\/[^\/]+$/)) {
         // Replace with generic type.
         type = meta.default(prefix) || 'application/octet-stream';
       }

@@ -33,13 +33,6 @@ exports.returnMeta = function (status, meta) {
   return meta;
 };
 
-exports.composePath = function (name, path) {
-  if (path != '' && path !== undefined && path !== null) {
-    name = path.replace(/\/$/, '') +'/'+ name;
-  };
-  return name;
-};
-
 /**
  * Generator for decorator to track asynchronous tasks.
  *
@@ -126,47 +119,6 @@ exports.expandPath = function (path, callback) {
   return callback(path);
 }
 
-
-/**
- * JSON pretty printer.
- */
-exports.JSONPretty = function (data) {
-  // Normalize to compact JSON.
-  if (typeof data == 'string') {
-    data = JSON.parse(data);
-  }
-  data = JSON.stringify(data);
-  
-  // Add spaces around operators and quotes.
-  data = data.replace(/("[^"]*"|'[^']*')?([\[{:,}\]](?!\s))/g, '$1$2 ');
-  data = data.replace(/(\S)([\]}])/g, '$1 $2');
-
-  // Add linebreaks around element/list separators.
-  data = data.replace(/[ \n\t]+([\]}])/g, " $1");
-  data = data.replace(/ ([\]}])/g, "\n$1");
-  data = data.replace(/(("[^"]*"|'[^']*')?[\[{,])[ \n\t]+/g, "$1 ");
-  data = data.replace(/(("[^"]*"|'[^']*')?[\[{,] )/g, "$1\n");
-
-  // Indent
-  var m = [],
-      indent = 0,
-      data = data.split("\n");
-  
-  for (i in data) (function (line) {
-    // Count closing chars.
-    indent -= (m = line.match(/[\]}]/g)) && m.length;
-
-    // Two spaced indent.
-    line = Array(indent + 1).join('  ') + line;
-
-    // Count opening chars.
-    indent += (m = line.match(/[\[{]/g)) && m.length;
-    data[i] = line;
-  })(data[i]);
-  
-  return data.join("\n");
-}
-
 /**
  * Parse command arguments.
  *
@@ -181,16 +133,16 @@ exports.parseArgs = function (tokens) {
       i = 1, m;
 
   for (; i < n; ++i) (function (token) {
-    if (m = /^-([A-Za-z0-9_])$/(tokens[i])) {
+    if (m = tokens[i].match(/^-([A-Za-z0-9_])$/)) {
       options[m[1]] = true;
     }
-    else if (m = /^-([A-Za-z0-9_][A-Za-z0-9_-]*)$/(tokens[i])) {
+    else if (m = tokens[i].match(/^-([A-Za-z0-9_][A-Za-z0-9_-]*)$/)) {
       var flags = m[1].split(''), j;
       for (j in flags) {
         options[flags[j]] = true;
       }
     }
-    else if (m = /^--([A-Za-z0-9_-]+)$/(tokens[i])) {
+    else if (m = tokens[i].match(/^--([A-Za-z0-9_-]+)$/)) {
       if (typeof tokens[i + 1] != 'undefined' && tokens[i + 1][0] != '-') {
         ++i;
         options[m[1]] = tokens[i];
@@ -227,7 +179,7 @@ exports.escapeBinary = function (data) {
 
   // Escape non-printables
   binary = binary.replace(/([\u0000-\u001F\u0080-\u009F])/g, function (x, char) {
-    if (/[^\r\n\t]/(char)) {
+    if (char.match(/[^\r\n\t]/)) {
       var num = char.charCodeAt(0).toString(16);
       while (num.length < 4) num = '0' + num;
       return '\\u' + num;

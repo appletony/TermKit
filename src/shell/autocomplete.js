@@ -78,13 +78,13 @@ exports.autocomplete.prototype = {
         that.filesystem(path, prefix, { ignoreCase: ignoreCase, executable: true }, track(function (files) {
           matches = matches.concat(files);
         }));
-      })(paths[i]);
+      })(paths[i]);      
     }
     else {
       // Scan current dir for files.
       this.filesystem(cwd, prefix, { ignoreCase: ignoreCase }, track(function (files) {
         matches = files;
-      }));
+      }));      
     }
     
   },
@@ -103,7 +103,7 @@ exports.autocomplete.prototype = {
         key = key.toLowerCase();
       }
       if (prefix == '' || key.indexOf(prefix) === 0) {
-        matches.push(exports.autocomplete.match(i, i + ' ', 'command'));
+        matches.push(exports.autocomplete.match(i, i, 'command'));
       }
     }
     matches.sort();
@@ -118,7 +118,7 @@ exports.autocomplete.prototype = {
 
     // Trailing slashes.
     function trail(path) {
-      if (!(/\/$/(path))) {
+      if (!(path.match(/\/$/))) {
         path += '/';
       }
       return path;
@@ -198,7 +198,7 @@ exports.autocomplete.prototype = {
               
               // Get correct type and suffix.
               var type = 'file',
-                  suffix = ' ';
+                  suffix = '';
 
               if (stats.isDirectory()) {
                 type = 'folder';

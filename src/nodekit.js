@@ -1,3 +1,4 @@
+require('longjohn')
 var router = require('./router'),
     io = require('socket.io'),
     blage = require('blage'),
@@ -5,9 +6,7 @@ var router = require('./router'),
     http = require('http'),
     kip = require('kip')
 
-var file = kip(path.dirname(__filename), {
-  cache: '50mb'
-})
+var file = kip(path.dirname(__filename), {cache: '50mb'})
 
 // Load config file.
 var config = require('./config').getConfig()

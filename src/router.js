@@ -1,6 +1,6 @@
 var shell = require('./shell');
-var returnMeta = require('./misc').returnMeta;
-var protocol = require('./shared/protocol');
+var returnMeta = require('./misc.js').returnMeta;
+var protocol = require('./protocol.js');
 
 /**
  * Processes incoming messages on a connection, routes them to active sessions.
@@ -79,24 +79,14 @@ exports.router.prototype = {
  */
 exports.handlers = {
   'session.open.shell': function (session, query, args, exit) {
-    try {
-      var session = new shell.shell(args, this);
-      this.addSession(session);
-      exit(true, { session: session.id });
-    }
-    catch (e) {
-      exit(false);
-    }
+	var session = new shell.shell(args, this);
+	this.addSession(session);
+	exit(true, { session: session.id });
   },
   
   'session.close': function (session, query, args, exit) {
-    if (session) {
-      session.close();
-      this.removeSession(session);
-      exit(true);
-    }
-    else {
-      exit(false);
-    }
+	session.close();
+	this.removeSession(session);
+	exit(true);
   },
 };

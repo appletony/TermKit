@@ -1,7 +1,6 @@
 var fs = require('fs'), net = require('net');
-
-var spawn = require('child_process').spawn,
-    exec = require('child_process').exec;
+var path = require('path')
+var child_process = require('child_process');
 
 var config = require('../config').getConfig();
 
@@ -18,16 +17,15 @@ exports.shell = function (args, router) {
   // Get user
   var user = args.user || process.env.USER;
   var that = this;
-  
+
   // Extract location of source.
-  var p, path = process.argv[1].split('/');
-  path[path.length - 1] = 'shell/worker.js';
-  path = path.join('/');
+  var p;
   
   // Determine user identity.
   if (user == process.env.USER) {
     // Spawn regular worker.
-    p = this.process = spawn('node', [ path ], {
+    p = this.process = child_process.fork(path.join(path.dirname(__filename), 'worker.js'), [], {
+      env: process.env,
       cwd: process.cwd(),
     });
   }
@@ -42,10 +40,8 @@ exports.shell = function (args, router) {
     });
 
     // Bind stdout receiver.
-    p && p.stdout.on('data', function (data) { that.receive(data); });
+    p.on('message', function (data) { that.receive(data); });
 
-    // Bind stderr receiver.
-    p && p.stderr.on('data', function (data) { that.error(data); });
   }
   else {
     throw "Error spawning worker.js.";
@@ -74,36 +70,19 @@ exports.shell.prototype = {
   
   // Send query to worker.
   send: function (query, method, args) {
-    var json = JSON.stringify({ query: query, method: method, args: args });
-    this.process.stdin.write(json + "\u0000");
-  },
-  
-  // Log error.
-  error: function (data) {
-    console.log('worker: ', data.toString());
+	  this.process.send({ query: query, method: method, args: args });
   },
   
   // Receive message from worker.
-  receive: function (data) {
-    this.buffer += data;
-    while (this.buffer.indexOf("\u0000") >= 0) {
-      // Cut off chunk.
-      var chunk = this.buffer.split("\u0000").shift();
-      this.buffer = this.buffer.substring(chunk.length + 1);
-
-      // Parse message.
-      var message = JSON.parse(chunk);
-
-      // Intercept config changes.
-      if (message.method == 'shell.config') {
-        config.replace(message.args);
-        return;
-      }
-
-      // Lock message to this session and forward.
-      message.session = this.id;
-      this.router.forward(message);
+  receive: function (message) {
+    if (message.method == 'shell.config') {
+      config.replace(message.args);
+      return;
     }
+
+    // Lock message to this session and forward.
+    message.session = this.id;
+    this.router.forward(message);
   }
 };
 

@@ -1,6 +1,6 @@
-var view = require('view/view'),
-    whenDone = require('misc').whenDone,
-    meta = require('shell/meta'),
+var view = require('../../view/view'),
+    whenDone = require('../../misc').whenDone,
+    meta = require('../meta'),
     http = require('http'),
     url = require('url');
     
