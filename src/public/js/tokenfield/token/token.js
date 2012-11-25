@@ -1,5 +1,5 @@
 console.log('REQUIRED: TOKEN');
-var misc = require('../../misc/misc')
+var misc = require('../../misc/misc');
 
 /**
  * Represents a single token in the field.
@@ -11,9 +11,9 @@ var token = module.exports = function (type, contents, style) {
   this.$element = this.$markup();
   
   this.locked = false;
-  this.type = type;
-  this.contents = contents;
-  this.style = style;
+  this._type = type;
+  this._contents = contents
+  this._style = style;
   this.container = null;
   this.flags = {};
   
@@ -54,7 +54,7 @@ var token = module.exports = function (type, contents, style) {
       return this._contents;
     },
     set: function (contents) {
-      this._oldContents = this._contents || this.contents;
+      this._oldContents = this.contents;
       this._contents = contents || '';
       this.updateElement();
     }
@@ -72,8 +72,8 @@ token.prototype.updateElement = function () {
   // Update the element's markup in response to internal changes.
   this.$element.data('controller', this);
   this.$element.attr('class', 'token token-' + this.type);
-  if (this._style) {
-    this.$element.addClass('style-' + this._style);
+  if (this.style) {
+    this.$element.addClass('style-' + this.style);
   }
   if (!this.locked) {
     this.$element.html('<span class="contents">'+ misc.escapeText(this.contents) +'</span>');
@@ -95,7 +95,7 @@ token.prototype.transmute = function (token, force) {
 token.prototype.checkTriggers = function (selection, event) {
   // Use triggers to respond to a creation or change event.
   // @return Array of replacement tokens for this token (optional).
-  var token = this, t = tf.token.triggers;
+  var token = this, t = token.triggers;
   
   // Apply type
   var update, triggers = [].concat(t[this.type] || [], t['*'] || []);
@@ -157,15 +157,7 @@ token.prototype.toCommand = function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-require('./empty');
-require('./plain');
-require('./pipe');
-require('./quoted');
-require('./regex');
-
-////////////////////////////////////////////////////////////////////////////////
-
-token.triggers = {
+token.prototype.triggers = token.triggers = {
   '*': [
     { changes: /./, callback: token.quoted.triggerResetEscape },
 //    { changes: /./, callback: tf.tokenRegex.triggerResetEscape },
@@ -197,3 +189,11 @@ token.triggers = {
     { changes: /[\/]/,   callback: token.regex.triggerUnregex },
   ],*/
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+require('./empty');
+require('./plain');
+require('./pipe');
+require('./quoted');
+require('./regex');

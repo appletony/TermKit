@@ -5,7 +5,6 @@ console.log('REQUIRED: COMMAND.CONTEXT');
 */
 var commandContext = module.exports = function (shell) {
   console.log('NEW COMMANDCONTEXT');
-  var self = this;
   
   this.$element = this.$markup();
   
@@ -20,22 +19,22 @@ var commandContext = module.exports = function (shell) {
   // State
   Object.defineProperty(this, 'path', {
     get: function () {
-      return self._path;
+      return this._path;
     },
     set: function (path) {
-      self._path = path;
-      self.updateElement();
+      this._path = path;
+      this.updateElement();
     }
   });
   
   // State
   Object.defineProperty(this, 'user', {
     get: function () {
-      return self._user;
+      return this._user;
     },
     set: function (user) {
-      self._user = user;
-      self.updateElement();
+      this._user = user;
+      this.updateElement();
     }
   });
 };

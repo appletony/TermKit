@@ -8,15 +8,14 @@ var tokenField = require('../tokenfield/tokenfield'),
  */
 var command = module.exports = function (commandView, context) {
   console.log('NEW COMMAND');
-  var self = this;
   
   this.$element = this.$markup();
   this.$sigil = this.$element.find('.sigil');
   
   this.commandView = commandView;
   this.context = context;
-  this.collapsed = true;
-  this.state = 'waiting';
+  this._collapsed = true;
+  this._state = 'waiting';
   
   // Refresh markup.
   this.updateElement();
@@ -24,22 +23,22 @@ var command = module.exports = function (commandView, context) {
   // State
   Object.defineProperty(this, 'state', {
     get: function () {
-      return self._state;
+      return this._state;
     },
     set: function (state) {
-      self._state = state || 'waiting';
-      self.updateElement();
+      this._state = state || 'waiting';
+      this.updateElement();
     }
   });
   
   // Collapsed
   Object.defineProperty(this, 'collapsed', {
     get: function () {
-      return self._collapsed;
+      return this._collapsed;
     },
     set: function (collapsed) {
-      self._collapsed = collapsed;
-      self.updateElement();
+      this._collapsed = collapsed;
+      this.updateElement();
     }
   });
 };

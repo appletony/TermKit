@@ -4,7 +4,6 @@ console.log('REQUIRED: INDICATORS.PROGRESS');
  */
 var progress = module.exports = function () {
   console.log('NEW INDICATORS.PROGRESS');
-  var that = this;
   
   this.$element = this.$markup();
   this._value = 0;
@@ -13,10 +12,10 @@ var progress = module.exports = function () {
   
   Object.defineProperty(this, 'value', {
     get: function () {
-      return that._value;
+      return this._value;
     },
     set: function (value) {
-      that._value = Math.max(that.min, Math.min(that.max, value));
+      this._value = Math.max(this.min, Math.min(this.max, value));
     }
   });
   

@@ -34,7 +34,7 @@ var tokenfield = module.exports = function () {
   // Return contents as array of tokens.
   Object.defineProperty(this, 'contents', {
     get: function () {
-      return that.tokenList.contents;
+      return this.tokenList.contents;
     }
   });
 };
@@ -83,7 +83,7 @@ tokenfield.prototype.fieldMouseDown = function (event) {
   
     // Place the caret on the clicked location.
     var token = $target.data('controller');
-    this.selection.anchor = tf.selection.fromEvent(event);
+    this.selection.anchor = tokenfield.selection.fromEvent(event);
     this.caret.moveTo(this.selection);
   }
   

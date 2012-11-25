@@ -7,19 +7,18 @@ var misc = require('./misc/misc');
 */
 var container = module.exports = function () {
   console.log('NEW CONTAINER');
-  var self = this;
   this.collection = [];
   
   Object.defineProperty(this, 'contents', {
     get: function () {
-      return [].concat(self.collection);
+      return [].concat(this.collection);
     }
   });
   
   Object.defineProperty(this, 'length', {
     get: function () {
       // Pass-through length of array
-      return self.collection.length;
+      return this.collection.length;
     }
   });
 };

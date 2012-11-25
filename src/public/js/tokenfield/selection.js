@@ -5,7 +5,6 @@ console.log('REQUIRED: SELECTION');
  */
 var selection = module.exports = function (tokenList) {
   console.log('NEW SELECTION');
-  var self = this;
   
   this.tokenList = tokenList;
   this._anchor = { token: null, offset: 0 };
@@ -14,22 +13,22 @@ var selection = module.exports = function (tokenList) {
   // Anchor/start of the selection.
   Object.defineProperty(this, 'anchor', {
     get: function () {
-      return self._anchor;
+      return this._anchor;
     },
     set: function (point) {
-      self._focus.token = self._anchor.token = point.token || null;
-      self._focus.offset = self._anchor.offset = point.offset || 0;
+      this._focus.token = this._anchor.token = point.token || null;
+      this._focus.offset = this._anchor.offset = point.offset || 0;
     }
   });
   
   // Focus/end of the selection.
   Object.defineProperty(this, 'focus', {
     get: function () {
-      return self._focus;
+      return this._focus;
     },
     set: function (point) {
-      self._focus.token = point.token || self._anchor.token;
-      self._focus.offset = point.offset || self._anchor.offset;
+      this._focus.token = point.token || this._anchor.token;
+      this._focus.offset = point.offset || this._anchor.offset;
     }
   });
 };
@@ -37,8 +36,6 @@ var selection = module.exports = function (tokenList) {
 selection.prototype.checkBounds = function (point) {
   // Resolve out-of-bounds offsets into neighbouring tokens.
   var token = point.token, offset = point.offset;
-  
-  window.stack()
     
   // Overflow into next token.
   while (token && (offset > token.contents.length)) {

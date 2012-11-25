@@ -1,6 +1,8 @@
 console.log('REQUIRED: CARET');
 
-var autocomplete = require('./autocomplete');
+var autocomplete = require('./autocomplete'),
+    token = require('./token/token'),
+    misc = require('../misc/misc');
 
 /**
  * Emulates a caret inside a token using an invisible ad-hoc textfield.
@@ -152,7 +154,7 @@ caret.prototype.updateContents = function (event) {
     
     // Notify callers of event
     // (asynchronous to give the DOM time to finish event handling).
-    async.call(this, function () {
+    misc.async.call(this, function () {
       // Merge stored key/char codes in, effectively merging keydown/keypress info.
       event.keyCode = event.keyCode || this.keyCode;
       event.charCode = event.charCode || this.charCode;
@@ -171,7 +173,7 @@ caret.prototype.updateContents = function (event) {
   this.$input.css('width', this.$measure.width() + this.$measure.height() + 1);
   
   // Ensure visible.
-  async.call(this, function () {
+  misc.async.call(this, function () {
     this.scrollIntoView();
   });
 };
@@ -219,7 +221,7 @@ caret.prototype.onKeyDown = function (event) {
   
         // Create new empty token if needed.
         if (!next) {
-          this.tokenList.add(new tf.tokenEmpty(''));
+          this.tokenList.add(new token.empty(''));
         }
         
         // Move to token.
