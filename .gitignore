@@ -15,3 +15,6 @@ node_modules
 src/public/components
 app/build/TermKit.app/Contents/Resources/HTML/
 app/build/TermKit.app/Contents/Resources/shared/
+
+src/public/vendor/
+src/public/build/
