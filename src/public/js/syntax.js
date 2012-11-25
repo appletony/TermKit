@@ -1,4 +1,4 @@
-(function ($) {
+console.log('REQUIRED: SYNTAX');
 
 var files = {
     'shBrushAppleScript.js':['applescript'],
@@ -28,13 +28,13 @@ var files = {
   },
   scripts = {},
   urls = {};
-  
+
 for (i in files) {
   for (j in files[i]) {
     urls[files[i][j]] = url(i);
   }
 }
-  
+
 function url(file) {
   return 'components/SyntaxHighlighter/scripts/' + file;
 }
@@ -44,29 +44,29 @@ function loadScript(url, callback) {
   if (scripts[url]) {
     return callback();
   }
-  
-	var script = document.createElement('script'),
-		  done = false;
 
-	script.type = 'text/javascript';
-	script.language = 'javascript';
-	script.onload = script.onreadystatechange = function () {
-		if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
-			done = true;
-			scripts[url] = true;
-			
-			// Handle memory leak in IE
-			script.onload = script.onreadystatechange = null;
-			script.parentNode.removeChild(script);
-			
+  var script = document.createElement('script'),
+      done = false;
+
+  script.type = 'text/javascript';
+  script.language = 'javascript';
+  script.onload = script.onreadystatechange = function () {
+    if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+      done = true;
+      scripts[url] = true;
+
+      // Handle memory leak in IE
+      script.onload = script.onreadystatechange = null;
+      script.parentNode.removeChild(script);
+
       delete SyntaxHighlighter.vars.discoveredBrushes;
-			callback();
-		}
-	};
-	script.src = url;
-	
-	// sync way of adding script tags to the page
-	document.body.appendChild(script);
+      callback();
+    }
+  };
+  script.src = url;
+
+  // sync way of adding script tags to the page
+  document.body.appendChild(script);
 };
 
 /**
@@ -83,5 +83,3 @@ SyntaxHighlighter.highlight = function (p, e) {
     }
   }
 };
-
-})(jQuery);

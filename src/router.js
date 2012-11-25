@@ -8,7 +8,7 @@ var protocol = require('./shared/protocol.js');
 exports.router = function (connection) {
   var that = this;
 
-  this.protocol = new protocol.protocol(connection, this, true);
+  this.protocol = new protocol(connection, this, true);
 
   this.sessions = {};
   this.counter = 1;
