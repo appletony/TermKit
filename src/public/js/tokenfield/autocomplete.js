@@ -1,4 +1,6 @@
 console.log('REQUIRED: AUTOCOMPLETE');
+var misc = require('../misc/misc');
+
 /**
  * Autocomplete selection popup for use with a token.
  */
@@ -200,7 +202,7 @@ autocomplete.prototype.onKeyDown = function (event) {
   this.keyCode = event.keyCode;
   this.charCode = 0;
   
-  async.call(this, function () {
+  misc.async.call(this, function () {
     this.updateContents(event, local);
   });
 };

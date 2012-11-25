@@ -1,4 +1,5 @@
 console.log('REQUIRED: FRAME');
+var output = require('./output');
 /**
  * Controller for output frame.
  */
@@ -44,7 +45,7 @@ frame.prototype.allocate = function (views) {
   if (this.views.length < views) {
     views -= this.views.length;
     while (views--) {
-      this.views.push(new termkit.outputView());
+      this.views.push(new output.view());
       this.$element.append(this.views[this.views.length - 1].$element);
     };
   }

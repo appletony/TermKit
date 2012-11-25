@@ -215,8 +215,8 @@ caret.prototype.onKeyDown = function (event) {
         event.stopPropagation();
   
         // At end: move caret to next token
-        var token = this.selection.anchor.token,
-            index = this.tokenList.indexOf(token),
+        var tk = this.selection.anchor.token,
+            index = this.tokenList.indexOf(tk),
             next = this.tokenList.next(index);
   
         // Create new empty token if needed.
@@ -225,9 +225,9 @@ caret.prototype.onKeyDown = function (event) {
         }
         
         // Move to token.
-        async.call(this, function () {
+        misc.async.call(this, function () {
           var selection = this.selection,
-              token = this.token;
+              tk = this.token;
           this.remove();
   
           this.onChange(null, event);
@@ -246,14 +246,14 @@ caret.prototype.onKeyDown = function (event) {
       }
       break;
     case 13: // Return
-      async.call(this, function () {
+      misc.async.call(this, function () {
         this.remove();
         this.onSubmit(this.token, event);
       });
       break;
     case 37: // Left arrow
       if (this.selection.anchor.offset == 0) {
-        async.call(this, function () {
+        misc.async.call(this, function () {
           var selection = this.selection;
           selection.anchor.offset--;
           this.moveTo(selection, event);
@@ -263,7 +263,7 @@ caret.prototype.onKeyDown = function (event) {
       break;
     case 39: // Right arrow
       if (this.selection.anchor.offset == this.token.contents.length) {
-        async.call(this, function () {
+        misc.async.call(this, function () {
           var selection = this.selection;
           selection.anchor.offset++;
           this.moveTo(selection, event);
@@ -277,7 +277,7 @@ caret.prototype.onKeyDown = function (event) {
   this.charCode = 0;
   
   // Call updateContents when event processing is done (see onKeyPress).
-  async.call(this, function () {
+  misc.async.call(this, function () {
     this.updateContents(event);
   });
 };

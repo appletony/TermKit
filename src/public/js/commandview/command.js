@@ -1,7 +1,8 @@
 console.log('REQUIRED: COMMAND');
 var tokenField = require('../tokenfield/tokenfield'),
     spinner = require('../indicators/spinner'),
-    output = require('../output/output');
+    output = require('../output/output'),
+    misc = require('../misc/misc');
 
 /**
  * Represents a single command in the view.
@@ -122,7 +123,7 @@ command.prototype.submitCommand = function (event, tokens) {
     }[+success] || 'ok';
   
     // Open new command.
-    async(function () {
+    misc.async(function () {
       that.commandView.newCommand();
     });
   });

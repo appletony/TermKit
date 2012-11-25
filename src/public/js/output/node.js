@@ -1,4 +1,5 @@
 console.log('REQUIRED: NODE');
+var misc = require('../misc/misc');
 /**
  * Represents a piece of output in an output view.
  */

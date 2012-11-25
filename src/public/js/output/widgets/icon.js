@@ -1,5 +1,6 @@
 console.log('REQUIRED: WIDGET.ICON');
-var node = require('../node');
+var widgets = require('../factory').widgets,
+    node = require('../node');
 
 /**
  * Widget: File icon.

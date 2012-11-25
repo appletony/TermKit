@@ -1,5 +1,6 @@
 console.log('REQUIRED: FACTORY');
-var node = require('./node')
+var misc = require('../misc/misc'),
+    node = require('./node');
 
 /**
  * Constructs node objects of the right class.

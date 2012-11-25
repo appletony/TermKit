@@ -1,5 +1,6 @@
 console.log('REQUIRED: WIDGET.PROGRESS');
-var node = require('../node')
+var spinner = require('../../indicators/spinner'),
+    node = require('../node');
 
 /**
  * Widget: Progress bar
@@ -9,7 +10,7 @@ var progress = module.exports = function (properties) {
   // Initialize node.
   node.call(this, properties);
 
-  this.bar = new termkit.progress();
+  this.bar = new progress();
   this.$element.append(this.bar.$element);
 
   this.updateElement();

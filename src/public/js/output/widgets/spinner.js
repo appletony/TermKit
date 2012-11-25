@@ -1,5 +1,6 @@
 console.log('REQUIRED: WIDGET.SPINNER');
-var node = require('../node')
+var spinner = require('../../indicators/spinner'),
+    node = require('../node');
 
 /**
  * Widget: Spinner
@@ -9,7 +10,7 @@ var spinner = module.exports = function (properties) {
   // Initialize node.
   node.call(this, properties);
   
-  this.spinner = new termkit.spinner();
+  this.spinner = new spinner();
   this.$element.append(this.spinner.$element);
   
   this.updateElement();

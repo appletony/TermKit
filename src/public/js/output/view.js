@@ -1,6 +1,7 @@
 console.log('REQUIRED: VIEW');
 
-var factory = require('./factory');
+var factory = require('./factory'),
+    node = require('./node');
 
 /**
  * Controller for output view.
@@ -18,7 +19,7 @@ view.prototype.$markup = function () {
   var $outputView = $('<div class="termkitOutputView"><div class="isolate"></div></div>').data('controller', this);
   var that = this;
   
-  this.tree = new ov.outputNode({});
+  this.tree = new node({});
   $outputView.find('.isolate').append(this.tree.$element);
   
   return $outputView;

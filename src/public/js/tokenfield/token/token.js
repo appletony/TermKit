@@ -157,6 +157,14 @@ token.prototype.toCommand = function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+require('./empty');
+require('./plain');
+require('./pipe');
+require('./quoted');
+require('./regex');
+
+////////////////////////////////////////////////////////////////////////////////
+
 token.prototype.triggers = token.triggers = {
   '*': [
     { changes: /./, callback: token.quoted.triggerResetEscape },
@@ -189,11 +197,3 @@ token.prototype.triggers = token.triggers = {
     { changes: /[\/]/,   callback: token.regex.triggerUnregex },
   ],*/
 };
-
-////////////////////////////////////////////////////////////////////////////////
-
-require('./empty');
-require('./plain');
-require('./pipe');
-require('./quoted');
-require('./regex');

@@ -1,5 +1,7 @@
 console.log('REQUIRED: WIDGET.FILE');
-var node = require('../node');
+var widgets = require('../factory').widgets,
+    misc = require('../../misc/misc'),
+    node = require('../node');
 
 /**
  * Widget: File reference
@@ -37,7 +39,7 @@ file.prototype.updateElement = function () {
   
   // Set text labels.
   this.$name.text(this.properties.name);
-  this.$meta.text(formatSize(this.properties.stats.size));
+  this.$meta.text(misc.formatSize(this.properties.stats.size));
   
   if (this.properties.name[0] == '.') {
     this.$element.addClass('file-hidden');
