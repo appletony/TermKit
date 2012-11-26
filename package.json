@@ -1,12 +1,19 @@
 {
   "name": "TermKit",
-  "version": "0.0.1",
+  "version": "0.3.4",
   "description": "Experimental Terminal platform",
-  "main": "src/nodekit.js",
   "license": "BSD",
+  "main": "src/nodekit.js",
+  "bin": {
+    "termkit": "src/nodekit.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ramitos/TermKit.git"
+  },
+  "scripts": {
+    "install": "make install build app",
+    "preupdate": "make clean"
   },
   "dependencies": {
     "component": "0.9.x",

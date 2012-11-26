@@ -1,4 +1,6 @@
+#!/usr/bin/env node
 require('longjohn')
+
 var router = require('./router'),
     io = require('socket.io'),
     blage = require('blage'),

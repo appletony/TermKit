@@ -1,13 +1,15 @@
 install:
-	npm install; \
 	./node_modules/.bin/bower install; \
-	./node_modules/.bin/component install
+	./node_modules/.bin/component install; \
+	mkdir -p ./app/build/TermKit.app/Contents/Resources/HTML; \
+	mkdir -p ./app/build/TermKit.app/Contents/Resources/shared
 
 app:
-	rm -rf app/build/TermKit.app/Contents/Resources/HTML/*; \
-	rm -rf app/build/TermKit.app/Contents/Resources/shared/*; \
-	cp -r src/public/* app/build/TermKit.app/Contents/Resources/HTML; \
-	cp -r src/shared/* app/build/TermKit.app/Contents/Resources/shared;
+	rm -rf ./app/build/TermKit.app/Contents/Resources/HTML/*; \
+	rm -rf ./app/build/TermKit.app/Contents/Resources/shared/*; \
+	cp -r ./src/public/* ./app/build/TermKit.app/Contents/Resources/HTML/; \
+	cp -r ./src/shared/* ./app/build/TermKit.app/Contents/Resources/shared/; \
+	cp -r ./app/build/TermKit.app /Applications/
 
 clean:
 	rm -rf components; \

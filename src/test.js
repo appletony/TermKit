@@ -145,7 +145,7 @@ function testCommands(assert) {
     { query: 5, method: 'shell.run', args: { tokens: [ 'cat', 'test.js' ], ref: 4 } },
   ], function (messages, success) {
     /*
-    for (i in messages) { 
+    for (i in messages) {
       console.log(messages[i]);
       messages[i].args && messages[i].args.objects && console.log('Objects', messages[i].args.objects);
     }
@@ -277,7 +277,7 @@ function testAutocomplete(assert) {
   ], function (messages, success) {
     /*
     var i, j;
-    for (i in messages) { 
+    for (i in messages) {
       for (j in messages[i].args.matches) {
         console.log(messages[i].args.matches[j]);
       }
@@ -531,7 +531,7 @@ function testPipe(assert) {
     { query: 8, method: 'shell.run', args: { tokens: [ [ 'ls' ], [ 'grep', '.js' ] ], ref: 7 } },
   ], function (messages, success) {
     /*
-    for (i in messages) { 
+    for (i in messages) {
       console.log(messages[i]);
       messages[i].args && messages[i].args.objects && console.log('Objects', messages[i].args.objects);
     }
