@@ -21,4 +21,4 @@ build:
 start:
 	open app/build/TermKit.app & node src/nodekit.js
 
-.PHONY: install app build start
+.PHONY: install app build start clean
