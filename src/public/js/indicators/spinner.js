@@ -1,25 +1,16 @@
-(function ($) {
- 
+console.log('REQUIRED: INDICATORS.SPINNER');
 /**
  * Controller for spinner.
  */
-var pi = termkit.spinner = function () {
+var spinner = module.exports = function () {
+  console.log('NEW INDICATORS.SPINNER');
   var that = this;
-
   this.$element = this.$markup();
 };
 
-pi.prototype = {
-  
-  // Return active markup for this field.
-  $markup: function () {
-    var $spinner = $('<div class="termkitSpinner">').data('controller', this);
-    var that = this;
-    return $spinner;
-  },
-
+// Return active markup for this field.
+spinner.prototype.$markup = function () {
+  var $spinner = $('<div class="termkitSpinner">').data('controller', this);
+  var that = this;
+  return $spinner;
 };
-
-///////////////////////////////////////////////////////////////////////////////
-
-})(jQuery);

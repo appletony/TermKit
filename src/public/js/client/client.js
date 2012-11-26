@@ -1,69 +1,56 @@
-(function ($) {
+console.log('REQUIRED: CLIENT');
+var protocol = require('../../../shared/protocol'),
+    urls = require('../misc/urls'),
+    emitter = require('emitter');
 
-/**
- * NodeKit client.
- */
-var tc = termkit.client = function () {
-  var that = this;
-  
+var client = module.exports = function () {
+  console.log('NEW CLIENT');
+  var self = this;
+  // Open socket to back-end.
+  this.socket = io.connect(urls.socket);
   // Keep track of sessions.
   this.sessions = {};
-  
-  // Set up event handlers.
-  this.onConnect = function () {};
-  this.onDisconnect = function () {};
-
-  // Open socket to back-end.
-  var s = this.socket = io.connect('http://localhost:2222', { });
-  
   // Use shared protocol handler with back-end.
-  this.protocol = new termkit.protocol(this.socket, this);
-  s.on('connect', function () {
-    // TODO: Handshake
-    that.onConnect();
-  }); 
-  s.on('disconnect', function() {
-    that.onDisconnect();
-  }); 
+  this.protocol = new protocol(this.socket, this);
+  
+  this.socket.on('connect', function () {
+    self.emit('connect');
+  });
+  
+  this.socket.on('disconnect', function () {
+    self.emit('disconnect');
+  });
 };
 
-tc.prototype = {
-  
-  add: function (session) {
-    this.sessions[session.id] = session;
-  },
-  
-  remove: function (session) {
-    delete this.sessions[session.id];
-  },
+client.prototype.add = function (session) {
+  // session -> shell instance
+  this.sessions[session.id] = session;
+};
 
-  dispatch: function (message) {
-    
-    if (message.query) {
-      // client doesn't support queries.
-      return;
-    }
-  
-    // must be regular viewstream message.
-    if (message.session) {
-      var session = this.sessions[message.session];
-      if (session) {
-        session.dispatch(message.method, message.args);
-      }
-    }
-  },
+client.prototype.remove = function (session) {
+  // session -> shell instance
+  this.sessions[session.id] = undefined;
+};
 
+client.prototype.dispatch = function (message) {
+  // must be regular viewstream message.
+  if(!message.session) return;
+  // client doesn't support queries.
+  if(message.query) return;
+  
+  var session = this.sessions[message.session];
+  if(!session) return;
+  session.dispatch(message.method, message.args);
+};
+
+client.prototype.query = function (method, args, session, callback) {
   // Invoke a method on the server.
-  query: function (method, args, session, callback) {
-    this.protocol.query(method, args, { session: session }, callback);
-  },
-
-  // Send a notification message.
-  notify: function (method, args, session) {
-    this.protocol.notify(method, args, { session: session });
-  },
-
+  this.protocol.query(method, args, {session: session}, callback);
 };
 
-})(jQuery);
+client.prototype.notify = function (method, args, session) {
+  // Send a notification message.
+  this.protocol.notify(method, args, {session: session});
+};
 
+emitter(client.prototype);

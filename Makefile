@@ -10,7 +10,7 @@ app:
 	cp -r src/shared/* app/build/TermKit.app/Contents/Resources/shared;
 
 build:
-	./node_modules/.bin/component build -o src/public/build
+	./node_modules/.bin/component build -v -o src/public/build
 
 start:
 	open app/build/TermKit.app & node src/nodekit.js

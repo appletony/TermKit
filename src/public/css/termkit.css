@@ -20,7 +20,7 @@ body {
   width: 24px;
   height: 24px;
   margin: 10px;
-  background: #000 url('../img/loading-black.gif');
+  background: #000 url('../public/img/loading-black.gif');
 }
 
 /************/
@@ -513,49 +513,49 @@ body {
 .termkitTokenField span.autocomplete .line.style-command .prefix {
   margin-left: -1px;
   padding-left: 21px;
-  background: url('../img/command.png') no-repeat 0 50%;
+  background: url('../public/img/command.png') no-repeat 0 50%;
 }
 .termkitTokenField span.autocomplete .line.style-file .prefix {
   margin-left: -1px;
   padding-left: 21px;
-  background: url('../img/file.png') no-repeat 0 50%;
+  background: url('../public/img/file.png') no-repeat 0 50%;
 }
 .termkitTokenField span.autocomplete .line.style-folder .prefix {
   margin-left: -1px;
   padding-left: 21px;
-  background: url('../img/folder.png') no-repeat 0 50%;
+  background: url('../public/img/folder.png') no-repeat 0 50%;
 }
 
 .termkitTokenField span#caret input.style-command {
   padding-left: 20px;
   height: 20px;
-  background: url('../img/command.png') no-repeat 0 50%;
+  background: url('../public/img/command.png') no-repeat 0 50%;
 }
 .termkitTokenField span#caret input.style-file {
   padding-left: 20px;
   height: 20px;
-  background: url('../img/file.png') no-repeat 0 50%;
+  background: url('../public/img/file.png') no-repeat 0 50%;
 }
 .termkitTokenField span#caret input.style-folder {
   padding-left: 20px;
   height: 20px;
-  background: url('../img/folder.png') no-repeat 0 50%;
+  background: url('../public/img/folder.png') no-repeat 0 50%;
 }
 
 .termkitTokenField .token.style-command span.contents {
   margin-left: -.1em;
   padding-left: 21px;
-  background: url('../img/command.png') no-repeat 0 50%;
+  background: url('../public/img/command.png') no-repeat 0 50%;
 }
 .termkitTokenField .token.style-file span.contents {
   margin-left: -.1em;
   padding-left: 21px;
-  background: url('../img/file.png') no-repeat 0 50%;
+  background: url('../public/img/file.png') no-repeat 0 50%;
 }
 .termkitTokenField .token.style-folder span.contents {
   margin-left: -.1em;
   padding-left: 21px;
-  background: url('../img/folder.png') no-repeat 0 50%;
+  background: url('../public/img/folder.png') no-repeat 0 50%;
 }
 
 
@@ -650,19 +650,19 @@ body {
 
 /**************/
 ::-webkit-scrollbar {
-  background: #000;
-  width: 8px;
-  height: 8px;
+  /* background: #000; */
+  /* width: 8px; */
+/*   height: 8px; */
 }
 ::-webkit-scrollbar-track-piece:horizontal {
-  width: 30px;
+/*   width: 30px; */
 }
 ::-webkit-scrollbar-track {
-  background: #000;
+  /* background: #000; */
 }
 ::-webkit-scrollbar-thumb {
-  background: #333 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#333));
-  border-radius: 8px;
+  /* background: #333 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#333)); */
+/*   border-radius: 8px; */
 }
 
 /**************/

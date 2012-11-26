@@ -3,7 +3,62 @@
   "version": "0.0.1",
   "main": "src/public/js/termkit.js",
   "scripts": [
-    "src/public/js/termkit.js"
+    "src/public/js/commandview/commandcontext.js",
+    "src/public/js/commandview/commandview.js",
+    "src/public/js/commandview/iknowthis.js",
+    "src/public/js/commandview/command.js",
+    
+    "src/public/js/tokenfield/autocomplete.js",
+    "src/public/js/tokenfield/tokenfield.js",
+    "src/public/js/tokenfield/selection.js",
+    "src/public/js/tokenfield/caret.js",
+    
+    "src/public/js/tokenfield/token/quoted.js",
+    "src/public/js/tokenfield/token/token.js",
+    "src/public/js/tokenfield/token/regex.js",
+    "src/public/js/tokenfield/token/plain.js",
+    "src/public/js/tokenfield/token/empty.js",
+    "src/public/js/tokenfield/token/pipe.js",
+    
+    "src/public/js/output/factory.js",
+    "src/public/js/output/output.js",
+    "src/public/js/output/frame.js",
+    "src/public/js/output/view.js",
+    "src/public/js/output/node.js",
+    
+    "src/public/js/output/widgets/progress.js",
+    "src/public/js/output/widgets/spinner.js",
+    "src/public/js/output/widgets/image.js",
+    "src/public/js/output/widgets/code.js",
+    "src/public/js/output/widgets/file.js",
+    "src/public/js/output/widgets/html.js",
+    "src/public/js/output/widgets/icon.js",
+    "src/public/js/output/widgets/list.js",
+    "src/public/js/output/widgets/hex.js",
+
+    "src/public/js/output/widgets/text.js",
+    "src/public/js/output/widgets/view.js",
+    
+    "src/public/js/indicators/progress.js",
+    "src/public/js/indicators/spinner.js",
+    
+    "src/public/js/client/client.js",
+    "src/public/js/client/shell.js",
+    
+    "src/public/js/misc/misc.js",
+    "src/public/js/misc/urls.js",
+    
+    "src/public/js/container.js",
+    "src/public/js/termkit.js",
+    "src/public/js/syntax.js",
+
+    "src/shared/protocol.js"
   ],
-  "styles": []
+  "styles": [
+    "src/public/css/typography.css",
+    "src/public/css/termkit.css"
+  ],
+  "dependencies": {
+    "component/emitter": "*"
+  }
 }

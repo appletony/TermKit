@@ -3,7 +3,7 @@
   <head>
   	<meta charset='utf-8'>
   	<title>TermKit</title>
-  	<script src='vendor/jquery/jquery.min.js'></script>
+  	<script src='vendor/jquery/jquery.js'></script>
   	<script src='vendor/jquery-ui/ui/jquery-ui.js'></script>
   	<script src='vendor/socket.io-client/dist/socket.io.min.js'></script>
   	<script src='vendor/SyntaxHighlighter/scripts/XRegExp.js'></script>
@@ -13,30 +13,6 @@
   	<link rel='stylesheet' href='vendor/jquery-ui/themes/ui-darkness/jquery.ui.theme.css' type='text/css' media='screen'/>
   	<link rel='stylesheet' href='vendor/SyntaxHighlighter/styles/shCore.css' type='text/css' media='screen'/>
   	<link rel='stylesheet' href='vendor/SyntaxHighlighter/styles/shThemeFadeToGrey.css' type='text/css' media='screen'/>
-  	
-<!--     <script type='text/javascript' charset='utf-8' src='js/termkit.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/container.js'></script>
-    <script type='text/javascript' charset='utf-8' src='../shared/protocol.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/client/client.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/client/shell.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/indicators/progress.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/indicators/spinner.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/tokenfield/tokenfield.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/tokenfield/selection.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/tokenfield/caret.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/tokenfield/token.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/tokenfield/autocomplete.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/outputview/outputview.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/outputview/outputframe.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/outputview/outputnode.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/outputview/outputfactory.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/commandview/commandview.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/commandview/commandcontext.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/commandview/command.js'></script>
-    <script type='text/javascript' charset='utf-8' src='js/syntax.js'></script> -->
-    
-<!--     <link rel='stylesheet' href='css/typography.css' type='text/css' media='screen'/>
-    <link rel='stylesheet' href='css/termkit.css' type='text/css' media='screen'/> -->
     
     <link href='build/build.css' rel='stylesheet' type='text/css' media='screen'/>
     <script src='build/build.js'></script>
@@ -44,8 +20,23 @@
     <style type='text/css' media='screen' id='dynamic-styles'></style>
   </head>
   <body>
-    <script>$(function () {require('TermKit/src/public/js/termkit.js');});</script>
-<!--     <div id='terminal'></div>
-    <div><iframe id='usage'></iframe></div> -->
+    <script>$(function () {
+      window.addEventListener('error', function (e) {
+        console.log(e);
+      });
+      
+      window.stack = function () {
+        var e = new Error('dummy');
+        console.log(e.stack);
+        // var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '').replace(/^\s+at\s+/gm, '').replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@').split('\n');
+        // stack.forEach(function (line, i) {
+        //   console.log(line);
+        // });
+      };
+      
+      require('TermKit');
+    });</script>
+    <div><iframe id='usage'></iframe></div>
+    <div id='terminal'></div>
   </body>
 </html>
