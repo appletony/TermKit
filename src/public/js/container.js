@@ -8,20 +8,16 @@ var misc = require('./misc/misc');
 var container = module.exports = function () {
   console.log('NEW CONTAINER');
   this.collection = [];
-  
-  Object.defineProperty(this, 'contents', {
-    get: function () {
-      return [].concat(this.collection);
-    }
-  });
-  
-  Object.defineProperty(this, 'length', {
-    get: function () {
-      // Pass-through length of array
-      return this.collection.length;
-    }
-  });
 };
+
+container.prototype.__defineGetter__('contents', function () {
+  return [].concat(this.collection);
+});
+
+container.prototype.__defineGetter__('length', function () {
+  // Pass-through length of array
+  return this.collection.length;
+});
 
 container.prototype.add = function (collection, index) {
   // Add a new object at the given index (optional).

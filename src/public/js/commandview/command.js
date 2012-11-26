@@ -20,29 +20,27 @@ var command = module.exports = function (commandView, context) {
   
   // Refresh markup.
   this.updateElement();
-  
-  // State
-  Object.defineProperty(this, 'state', {
-    get: function () {
-      return this._state;
-    },
-    set: function (state) {
-      this._state = state || 'waiting';
-      this.updateElement();
-    }
-  });
-  
-  // Collapsed
-  Object.defineProperty(this, 'collapsed', {
-    get: function () {
-      return this._collapsed;
-    },
-    set: function (collapsed) {
-      this._collapsed = collapsed;
-      this.updateElement();
-    }
-  });
 };
+
+// State
+command.prototype.__defineGetter__('state', function () {
+  return this._state;
+});
+
+command.prototype.__defineSetter__('state', function (state) {
+  this._state = state || 'waiting';
+  this.updateElement();
+});
+
+// Collapsed
+command.prototype.__defineGetter__('collapsed', function () {
+  return this._collapsed;
+})
+
+command.prototype.__defineSetter__('collapsed', function (collapsed) {
+  this._collapsed = collapsed;
+  this.updateElement();
+})
 
 command.prototype.$markup = function () {
   // Return active markup for this command.
@@ -84,6 +82,7 @@ command.prototype.updateElement = function () {
     'error': '✖',
     'warning': '✔',
   }[this.state];
+    
   this.$sigil.attr('class', 'sigil sigil-'+this.state).html(this.collapsed ? '▶' : sigil);
   
   this.spinner.$element[(this.state == 'running') ? 'show' : 'hide']();
@@ -136,7 +135,7 @@ command.prototype.checkTriggers = function (event, tokens) {
   // No triggers for no tokens.
   if (tokens.length == 0) return;
   
-  var command = this, t = command.triggers;
+  var cmd = this, t = command.triggers;
   $.each(t, function () {
     var trigger = this;
   
@@ -159,7 +158,7 @@ command.prototype.checkTriggers = function (event, tokens) {
     }
     
     function callback() {
-      trigger.callback.call(command, match, event, tokens);
+      trigger.callback.call(cmd, match, event, tokens);
     }
   
     // Test anchors.

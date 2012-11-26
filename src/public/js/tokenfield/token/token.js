@@ -18,48 +18,43 @@ var token = module.exports = function (type, contents, style) {
   this.flags = {};
   
   this.allowEmpty = false;
-  
-  // Pass-through length of contents
-  Object.defineProperty(this, 'length', {
-    get: function () {
-      return this.contents.length;
-    }
-  });
-  
-  // Type/class
-  Object.defineProperty(this, 'type', {
-    get: function () {
-      return this._type;
-    },
-    set: function (type) {
-      this._type = type || 'unknown';
-      this.updateElement();
-    }
-  });
-  
-  // Style
-  Object.defineProperty(this, 'style', {
-    get: function () {
-      return this._style;
-    },
-    set: function (style) {
-      this._style = style || '';
-      this.updateElement();
-    }
-  });
-  
-  // Text of contents
-  Object.defineProperty(this, 'contents', {
-    get: function () {
-      return this._contents;
-    },
-    set: function (contents) {
-      this._oldContents = this.contents;
-      this._contents = contents || '';
-      this.updateElement();
-    }
-  });
 };
+
+// Pass-through length of contents
+token.prototype.__defineGetter__('length', function () {
+  return this.contents.length;
+});
+
+// Type/class
+token.prototype.__defineGetter__('type', function () {
+  return this._type;
+});
+
+token.prototype.__defineSetter__('type', function (type) {
+  this._type = type || 'unknown';
+  this.updateElement();
+});
+
+// Style
+token.prototype.__defineGetter__('style', function () {
+  return this._style;
+});
+
+token.prototype.__defineSetter__('style', function (style) {
+  this._style = style || '';
+  this.updateElement();
+});
+
+// Text of contents
+token.prototype.__defineGetter__('contents', function () {
+  return this._contents;
+});
+
+token.prototype.__defineSetter__('contents', function (contents) {
+  this._oldContents = this.contents;
+  this._contents = contents || '';
+  this.updateElement();
+});
 
 token.prototype.$markup = function () {
   // Return active markup for this token.

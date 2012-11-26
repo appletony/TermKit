@@ -9,29 +9,27 @@ var selection = module.exports = function (tokenList) {
   this.tokenList = tokenList;
   this._anchor = { token: null, offset: 0 };
   this._focus = { token: null, offset: 0 };
-  
-  // Anchor/start of the selection.
-  Object.defineProperty(this, 'anchor', {
-    get: function () {
-      return this._anchor;
-    },
-    set: function (point) {
-      this._focus.token = this._anchor.token = point.token || null;
-      this._focus.offset = this._anchor.offset = point.offset || 0;
-    }
-  });
-  
-  // Focus/end of the selection.
-  Object.defineProperty(this, 'focus', {
-    get: function () {
-      return this._focus;
-    },
-    set: function (point) {
-      this._focus.token = point.token || this._anchor.token;
-      this._focus.offset = point.offset || this._anchor.offset;
-    }
-  });
 };
+
+// Anchor/start of the selection.
+selection.prototype.__defineGetter__('anchor', function () {
+  return this._anchor;
+});
+
+selection.prototype.__defineSetter__('anchor', function (point) {
+  this._focus.token = this._anchor.token = point.token || null;
+  this._focus.offset = this._anchor.offset = point.offset || 0;
+});
+
+// Focus/end of the selection.
+selection.prototype.__defineGetter__('focus', function () {
+  return this._focus;
+});
+
+selection.prototype.__defineSetter__('focus', function (point) {
+  this._focus.token = point.token || this._anchor.token;
+  this._focus.offset = point.offset || this._anchor.offset;
+});
 
 selection.prototype.checkBounds = function (point) {
   // Resolve out-of-bounds offsets into neighbouring tokens.

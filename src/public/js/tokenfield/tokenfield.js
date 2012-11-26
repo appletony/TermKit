@@ -30,14 +30,12 @@ var tokenfield = module.exports = function () {
   
   // Refresh markup.
   this.updateElement();
-
-  // Return contents as array of tokens.
-  Object.defineProperty(this, 'contents', {
-    get: function () {
-      return this.tokenList.contents;
-    }
-  });
 };
+
+// Return contents as array of tokens.
+tokenfield.prototype.__defineGetter__('contents', function () {
+  return this.tokenList.contents;
+});
 
 tokenfield.prototype.$markup = function () {
   // Return active markup for this field.

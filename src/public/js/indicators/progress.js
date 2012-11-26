@@ -9,17 +9,15 @@ var progress = module.exports = function () {
   this._value = 0;
   this.max = 100;
   this.min = 0;
-  
-  Object.defineProperty(this, 'value', {
-    get: function () {
-      return this._value;
-    },
-    set: function (value) {
-      this._value = Math.max(this.min, Math.min(this.max, value));
-    }
-  });
-  
 };
+
+progress.prototype.__defineGetter__('value', function () {
+  return this._value;
+});
+
+progress.prototype.__defineSetter__('value', function (value) {
+  this._value = Math.max(this.min, Math.min(this.max, value));
+});
 
 progress.prototype.$markup = function () {
   // Return active markup for this field.
