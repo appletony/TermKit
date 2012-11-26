@@ -9,6 +9,12 @@ app:
 	cp -r src/public/* app/build/TermKit.app/Contents/Resources/HTML; \
 	cp -r src/shared/* app/build/TermKit.app/Contents/Resources/shared;
 
+clean:
+	rm -rf components; \
+	rm -rf node_modules; \
+	rm -rf src/public/build; \
+	rm -rf src/public/vendor
+
 build:
 	./node_modules/.bin/component build -v -o src/public/build
 
